@@ -1,5 +1,6 @@
 <x-layouts.public title="Confirmer le vote">
-    <p class="text-[11px] font-medium uppercase tracking-[0.16em] text-brass">Confirmation</p>
+    <x-logo class="mx-auto h-16 w-16" />
+    <p class="mt-4 text-center text-[11px] font-medium uppercase tracking-[0.16em] text-brass">Confirmation</p>
     <h1 class="mt-1 font-serif text-3xl leading-tight text-ink">Vous êtes sur le point de voter pour :</h1>
 
     <ul class="mt-5 space-y-3">

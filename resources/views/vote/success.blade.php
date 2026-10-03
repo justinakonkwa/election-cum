@@ -1,6 +1,7 @@
 <x-layouts.public title="Vote enregistré">
     <section class="rounded-3xl border border-line bg-white px-6 py-8 text-center">
-        <div class="mx-auto grid h-14 w-14 place-items-center rounded-full bg-navy text-white" aria-hidden="true">
+        <x-logo class="mx-auto h-16 w-16" />
+        <div class="mx-auto mt-4 grid h-14 w-14 place-items-center rounded-full bg-navy text-white" aria-hidden="true">
             <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="currentColor" stroke-width="2.2">
                 <path d="M5 12.5 9.2 17 19 7" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>

@@ -11,7 +11,7 @@
     <a href="#contenu" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-10 focus:bg-white focus:px-3 focus:py-2">Aller au contenu</a>
     <header class="border-b-4 border-brass bg-navy text-white">
         <div class="mx-auto flex max-w-lg items-center gap-3 px-5 py-4">
-            <x-logo class="h-12 w-12" />
+            <x-logo class="h-14 w-14" />
             <div class="min-w-0 leading-tight">
                 <p class="text-[11px] font-medium uppercase tracking-[0.16em] text-[#e4d3ae]">Université Officielle de Bukavu</p>
                 <p class="mt-1 truncate text-sm">Club Univers Médical</p>

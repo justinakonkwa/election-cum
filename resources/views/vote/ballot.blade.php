@@ -1,6 +1,7 @@
 <x-layouts.public title="Choisissez vos candidats">
-    <div class="mb-5">
-        <p class="text-[11px] font-medium uppercase tracking-[0.16em] text-brass">Bulletin de vote</p>
+    <div class="mb-5 text-center">
+        <x-logo class="mx-auto h-20 w-20" />
+        <p class="mt-4 text-[11px] font-medium uppercase tracking-[0.16em] text-brass">Bulletin de vote</p>
         <h1 class="mt-1 font-serif text-3xl leading-tight text-ink">Choisissez vos candidats</h1>
         <p class="mt-2 text-sm leading-6 text-slate-600">Un seul candidat par poste. Vous pouvez laisser un poste vide. Le vote est enregistré, puis la session se ferme.</p>
     </div>
