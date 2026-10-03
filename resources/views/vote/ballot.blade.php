@@ -2,7 +2,7 @@
     <div class="mb-5">
         <p class="text-[11px] font-medium uppercase tracking-[0.16em] text-brass">Bulletin de vote</p>
         <h1 class="mt-1 font-serif text-3xl leading-tight text-ink">Choisissez vos candidats</h1>
-        <p class="mt-2 text-sm leading-6 text-slate-600">Un candidat par poste. Vous vérifierez l'ensemble avant de confirmer.</p>
+        <p class="mt-2 text-sm leading-6 text-slate-600">Un seul candidat par poste. Vous pouvez laisser un poste vide. Le vote est enregistré, puis la session se ferme.</p>
     </div>
 
     @if (! $open)
@@ -32,7 +32,6 @@
                                     value="{{ $candidate->id }}"
                                     class="choice sr-only"
                                     @checked((int) ($selected[$position->id] ?? 0) === $candidate->id)
-                                    required
                                 >
                                 <span class="choice-card flex min-h-[5.5rem] items-center gap-3 rounded-2xl border border-line px-3 py-3">
                                     @if ($candidate->photo_path)

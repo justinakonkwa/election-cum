@@ -38,63 +38,49 @@ class VoteFlowTest extends TestCase
         parent::tearDown();
     }
 
-    public function test_a_registered_matricule_votes_once_and_the_ballot_stays_anonymous(): void
+    public function test_a_partial_ballot_is_stored_and_the_session_is_closed(): void
     {
-        [$election, $choices] = $this->ballotWorld();
-        $voter = Voter::factory()->create([
-            'election_id' => $election->id,
-            'matricule' => 'TEST1001',
-        ]);
-
-        $this->get(route('vote.ballot'))
-            ->assertRedirect(route('vote.identify'));
-
-        $this->get(route('vote.identify'))
-            ->assertOk()
-            ->assertSee('Votre matricule')
-            ->assertDontSee('MUKENDI');
-
-        $this->post(route('vote.identify.store'), ['matricule' => 'test 1001'])
-            ->assertRedirect(route('vote.ballot'));
+        [, $choices] = $this->ballotWorld();
+        $onlyOne = [array_key_first($choices) => $choices[array_key_first($choices)]];
 
         $this->get(route('vote.ballot'))
             ->assertOk()
             ->assertSee('Choisissez vos candidats')
+            ->assertSee('laisser un poste vide')
+            ->assertDontSee('Votre matricule')
             ->assertSee('MUKENDI')
             ->assertSee('KASONGO');
 
-        $this->post(route('vote.review'), ['choices' => $choices])
+        $this->post(route('vote.review'), ['choices' => $onlyOne])
             ->assertRedirect(route('vote.confirm'));
 
         $this->get(route('vote.confirm'))
             ->assertOk()
             ->assertSee('MUKENDI')
+            ->assertDontSee('KASONGO')
             ->assertSee('après confirmation');
 
         $this->post(route('vote.cast'))
-            ->assertRedirect(route('vote.success'));
+            ->assertRedirect(route('vote.success'))
+            ->assertSessionMissing('voter_choices')
+            ->assertSessionMissing('voter_ballot');
 
         $this->get(route('vote.success'))
             ->assertOk()
             ->assertSee('Votre vote a été enregistré avec succès.');
 
+        $this->get(route('vote.confirm'))
+            ->assertRedirect(route('vote.ballot'));
+
         $this->assertSame(1, Ballot::query()->count());
-        $this->assertSame(2, BallotChoice::query()->count());
-        $this->assertSame(1, Participation::query()->count());
-        $this->assertTrue($voter->fresh()->has_voted);
+        $this->assertSame(1, BallotChoice::query()->count());
+        $this->assertSame(0, Participation::query()->count());
+        $this->assertSame(0, Voter::query()->count());
         $this->assertFalse(Schema::hasColumn('ballots', 'voter_id'));
-        $this->assertNotSame(
-            Ballot::query()->value('receipt_code'),
-            Participation::query()->value('receipt_code'),
-        );
-
-        $this->post(route('vote.identify.store'), ['matricule' => 'TEST1001'])
-            ->assertSessionHas('error', 'Ce matricule a déjà voté.');
-
-        $this->post(route('vote.identify.store'), ['matricule' => 'INCONNU'])
-            ->assertSessionHas('error', 'Ce matricule ne figure pas sur la liste électorale.');
-
-        $this->assertSame(1, Ballot::query()->count());
+        $this->assertDatabaseHas('ballot_choices', [
+            'position_id' => array_key_first($onlyOne),
+            'candidate_id' => $onlyOne[array_key_first($onlyOne)],
+        ]);
     }
 
     public function test_voting_is_refused_before_opening_after_closing_and_when_suspended(): void
@@ -131,12 +117,9 @@ class VoteFlowTest extends TestCase
     public function test_incomplete_or_invalid_choices_do_not_create_a_ballot(): void
     {
         [, $choices] = $this->ballotWorld();
-        $onlyOne = [array_key_first($choices) => $choices[array_key_first($choices)]];
-        $this->identify($election = Election::query()->firstOrFail());
-
         $this->from(route('vote.ballot'))
-            ->post(route('vote.review'), ['choices' => $onlyOne])
-            ->assertSessionHas('error', 'Sélectionnez un candidat pour chaque poste.');
+            ->post(route('vote.review'), [])
+            ->assertSessionHasErrors('choices');
 
         $swapped = [
             array_key_first($choices) => array_values($choices)[1],
@@ -154,8 +137,7 @@ class VoteFlowTest extends TestCase
     {
         [$election, $choices] = $this->ballotWorld();
         $admin = User::factory()->create();
-        $voter = Voter::factory()->create(['election_id' => $election->id]);
-        app(VotingService::class)->cast($election, $voter, $choices);
+        app(VotingService::class)->cast($election, $choices);
 
         $this->actingAs($admin)
             ->get(route('admin.dashboard'))
@@ -179,7 +161,7 @@ class VoteFlowTest extends TestCase
         $this->get(route('admin.dashboard'))
             ->assertRedirect(route('admin.login'));
 
-        $this->get(route('vote.identify'))
+        $this->get(route('vote.ballot'))
             ->assertOk()
             ->assertDontSee('Votre matricule UOB');
     }
@@ -210,23 +192,9 @@ class VoteFlowTest extends TestCase
         [$election, $choices] = $this->ballotWorld();
         $candidate = Candidate::query()->findOrFail(array_values($choices)[0]);
         $candidate->update(['status' => CandidateStatus::Withdrawn]);
-        $voter = Voter::factory()->create(['election_id' => $election->id]);
-
         $this->expectException(VotingException::class);
 
-        app(VotingService::class)->cast($election, $voter, $choices);
-    }
-
-    private function identify(Election $election): Voter
-    {
-        $voter = Voter::factory()->create([
-            'election_id' => $election->id,
-        ]);
-
-        $this->post(route('vote.identify.store'), ['matricule' => $voter->matricule])
-            ->assertRedirect(route('vote.ballot'));
-
-        return $voter;
+        app(VotingService::class)->cast($election, $choices);
     }
 
     /**

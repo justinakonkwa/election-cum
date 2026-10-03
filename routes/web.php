@@ -12,11 +12,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/election/status', [HomeController::class, 'status'])->name('election.status');
 
-Route::get('/vote', [VoteController::class, 'identify'])->name('vote.identify');
-Route::post('/vote', [VoteController::class, 'storeIdentity'])
-    ->middleware('throttle:10,1')
-    ->name('vote.identify.store');
-Route::get('/vote/bulletin', [VoteController::class, 'ballot'])->name('vote.ballot');
+Route::get('/vote', [VoteController::class, 'ballot'])->name('vote.ballot');
+Route::redirect('/vote/bulletin', '/vote');
 Route::post('/vote/review', [VoteController::class, 'review'])->name('vote.review');
 Route::get('/vote/confirm', [VoteController::class, 'confirm'])->name('vote.confirm');
 Route::post('/vote/cast', [VoteController::class, 'cast'])

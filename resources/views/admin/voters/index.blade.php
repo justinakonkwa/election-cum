@@ -1,6 +1,6 @@
 <x-layouts.admin title="Électeurs">
     <h1 class="text-2xl font-semibold text-blue-950">Électeurs</h1>
-    <p class="mt-2 text-sm text-slate-600">Seuls les matricules de cette liste peuvent voter. Chaque matricule ne vote qu'une fois.</p>
+    <p class="mt-2 text-sm text-slate-600">Registre de la commission. Le vote en ligne ne demande pas de matricule.</p>
 
     @if ($election)
         <form method="POST" action="{{ route('admin.voters.store') }}" class="mt-6 grid gap-3 rounded-2xl bg-white p-4 ring-1 ring-slate-200 sm:grid-cols-2">

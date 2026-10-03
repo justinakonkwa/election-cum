@@ -28,8 +28,8 @@ class ReviewVoteRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'choices.required' => 'Sélectionnez un candidat pour chaque poste.',
-            'choices.*.required' => 'Sélectionnez un candidat pour chaque poste.',
+            'choices.required' => 'Sélectionnez au moins un candidat.',
+            'choices.*.required' => 'Sélectionnez au moins un candidat.',
         ];
     }
 }
