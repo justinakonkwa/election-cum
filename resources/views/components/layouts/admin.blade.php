@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? 'Commission' }}</title>
-    <link rel="icon" href="{{ asset('images/logo-cum.svg') }}?v=2" type="image/svg+xml">
+    <link rel="icon" href="{{ asset('images/logo-cum.png') }}?v=3" type="image/png">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-paper text-ink antialiased">
     <header class="border-b-4 border-brass bg-navy text-white">
         <div class="mx-auto flex max-w-5xl flex-wrap items-center justify-between gap-3 px-5 py-4">
             <a href="{{ route('home') }}" class="flex items-center gap-3">
-                <x-logo class="h-11 w-11" />
+                <x-logo class="h-14 w-14" />
                 <span>
                     <span class="block text-[11px] uppercase tracking-[0.16em] text-[#e4d3ae]">Commission électorale</span>
                     <span class="mt-1 block text-sm">Élections CUM</span>

@@ -10,7 +10,7 @@
         @endphp
         <section class="overflow-hidden rounded-3xl border border-line bg-white">
             <div class="bg-navy px-6 pb-7 pt-7 text-center text-white">
-                <x-logo class="mx-auto h-[4.5rem] w-[4.5rem]" />
+                <x-logo class="mx-auto h-36 w-36" />
                 <p class="mt-4 text-[11px] font-medium uppercase tracking-[0.18em] text-[#e4d3ae]">{{ $election->organization }}</p>
                 <h1 class="mt-2 font-serif text-[2rem] leading-tight">{{ $election->name }}</h1>
                 <p class="mt-2 text-sm text-blue-100">{{ $election->institution }}</p>

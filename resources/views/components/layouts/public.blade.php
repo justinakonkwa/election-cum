@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>{{ $title ?? 'Élections CUM' }}</title>
-    <link rel="icon" href="{{ asset('images/logo-cum.svg') }}?v=2" type="image/svg+xml">
+    <link rel="icon" href="{{ asset('images/logo-cum.png') }}?v=3" type="image/png">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="min-h-screen bg-paper text-ink antialiased">
     <a href="#contenu" class="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-10 focus:bg-white focus:px-3 focus:py-2">Aller au contenu</a>
     <header class="border-b-4 border-brass bg-navy text-white">
         <div class="mx-auto flex max-w-lg items-center gap-3 px-5 py-4">
-            <x-logo class="h-14 w-14" />
+            <x-logo class="h-16 w-16" />
             <div class="min-w-0 leading-tight">
                 <p class="text-[11px] font-medium uppercase tracking-[0.16em] text-[#e4d3ae]">Université Officielle de Bukavu</p>
                 <p class="mt-1 truncate text-sm">Club Univers Médical</p>
