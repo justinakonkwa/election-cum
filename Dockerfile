@@ -20,11 +20,11 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
-RUN composer dump-autoload --optimize \
+RUN mkdir -p storage/framework/cache/data storage/framework/sessions storage/framework/views storage/logs bootstrap/cache database \
+    && chmod -R ug+rwx storage bootstrap/cache database \
+    && composer dump-autoload --optimize \
     && npm run build \
-    && rm -rf node_modules \
-    && mkdir -p storage/framework/cache storage/framework/sessions storage/framework/views storage/logs bootstrap/cache database \
-    && chmod -R ug+rwx storage bootstrap/cache database
+    && rm -rf node_modules
 
 COPY docker/start.sh /start.sh
 RUN chmod +x /start.sh
