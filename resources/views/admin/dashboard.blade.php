@@ -4,6 +4,7 @@
         <p class="mt-4 text-slate-600">Aucune élection n'est configurée.</p>
     @else
         <p class="mt-2 text-slate-600">{{ $election->name }} — {{ $election->status->label() }}</p>
+        <p class="mt-1 text-sm text-slate-600">Clôture le {{ $election->end_at->timezone($election->timezone)->translatedFormat('l d F Y à H\hi') }} (heure de Lubumbashi).</p>
         <div class="mt-6">
             <article class="rounded-2xl bg-white p-4 ring-1 ring-slate-200">
                 <p class="text-xs uppercase tracking-wide text-slate-500">Votes enregistrés</p>

@@ -22,7 +22,7 @@ class ElectionSeeder extends Seeder
         if (! $election->exists) {
             $election->fill([
                 'start_at' => '2026-10-03 19:00:00',
-                'end_at' => '2026-10-03 23:59:59',
+                'end_at' => '2026-10-04 23:59:59',
                 'timezone' => 'Africa/Lubumbashi',
                 'status' => ElectionStatus::Scheduled,
                 'voting_type' => Election::TYPE_CANDIDATES,

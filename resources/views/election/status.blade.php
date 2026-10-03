@@ -8,13 +8,17 @@
             <p class="font-serif text-2xl text-ink">{{ $election->name }}</p>
             <p class="mt-1 text-sm text-slate-600">{{ $election->institution }}</p>
             <dl class="mt-5 divide-y divide-line text-sm">
+                @php
+                    $opens = $election->start_at->timezone($election->timezone);
+                    $closes = $election->end_at->timezone($election->timezone);
+                @endphp
                 <div class="flex items-start justify-between gap-4 py-3">
-                    <dt class="text-slate-500">Date</dt>
-                    <dd class="text-right">{{ $election->start_at->timezone($election->timezone)->translatedFormat('l d F Y') }}</dd>
+                    <dt class="text-slate-500">Ouverture</dt>
+                    <dd class="text-right">{{ $opens->translatedFormat('l d F Y') }} · {{ $opens->format('H\hi') }}</dd>
                 </div>
                 <div class="flex items-start justify-between gap-4 py-3">
-                    <dt class="text-slate-500">Horaire</dt>
-                    <dd class="text-right">{{ $election->start_at->timezone($election->timezone)->format('H\hi') }} — {{ $election->end_at->timezone($election->timezone)->format('H\hi') }}</dd>
+                    <dt class="text-slate-500">Clôture</dt>
+                    <dd class="text-right">{{ $closes->translatedFormat('l d F Y') }} · {{ $closes->format('H\hi') }}</dd>
                 </div>
                 <div class="flex items-center justify-between gap-4 py-3">
                     <dt class="text-slate-500">Statut</dt>

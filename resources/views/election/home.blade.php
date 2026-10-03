@@ -17,13 +17,27 @@
             </div>
 
             <div class="px-6 py-6">
+                @php
+                    $opens = $election->start_at->timezone($election->timezone);
+                    $closes = $election->end_at->timezone($election->timezone);
+                @endphp
                 <p class="text-center text-[11px] font-medium uppercase tracking-[0.16em] text-brass">
-                    {{ $election->start_at->timezone($election->timezone)->translatedFormat('l d F Y') }}
+                    @if ($opens->isSameDay($closes))
+                        {{ $opens->translatedFormat('l d F Y') }}
+                    @else
+                        Jusqu'au {{ $closes->translatedFormat('l d F Y') }}
+                    @endif
                 </p>
                 <p class="mt-1 text-center font-serif text-2xl text-ink">
-                    {{ $election->start_at->timezone($election->timezone)->format('H\hi') }}
-                    <span class="text-brass">—</span>
-                    {{ $election->end_at->timezone($election->timezone)->format('H\hi') }}
+                    @if ($opens->isSameDay($closes))
+                        {{ $opens->format('H\hi') }}
+                        <span class="text-brass">—</span>
+                        {{ $closes->format('H\hi') }}
+                    @else
+                        {{ $opens->translatedFormat('d F') }} {{ $opens->format('H\hi') }}
+                        <span class="text-brass">—</span>
+                        {{ $closes->translatedFormat('d F') }} {{ $closes->format('H\hi') }}
+                    @endif
                 </p>
 
                 <div class="mt-6" @if ($target && $clock) x-data="{ h: @js($clock[0]), m: @js($clock[1]), s: @js($clock[2]), target: {{ $target }}, tick() { const diff = Math.max(0, this.target - Math.floor(Date.now() / 1000)); this.h = String(Math.floor(diff / 3600)).padStart(2, '0'); this.m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0'); this.s = String(diff % 60).padStart(2, '0'); } }" x-init="tick(); setInterval(() => this.tick(), 1000)" @endif>
