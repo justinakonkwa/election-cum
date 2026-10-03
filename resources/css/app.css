@@ -1,0 +1,31 @@
+@import 'tailwindcss';
+
+@source '../views/**/*.blade.php';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: ui-sans-serif, system-ui, sans-serif;
+    --font-serif: Georgia, "Iowan Old Style", "Palatino Linotype", Palatino, serif;
+    --color-ink: #12243f;
+    --color-navy: #16325c;
+    --color-brass: #a68448;
+    --color-paper: #f3efe6;
+    --color-line: #e4d9c8;
+}
+
+.choice:checked + .choice-card {
+    border-color: var(--color-navy);
+    background: #f3f6fb;
+}
+
+.choice:checked + .choice-card .choice-mark {
+    border-color: var(--color-navy);
+    background: var(--color-navy);
+    box-shadow: inset 0 0 0 3px #fff;
+}
+
+.choice:focus-visible + .choice-card {
+    outline: 2px solid var(--color-navy);
+    outline-offset: 3px;
+}
