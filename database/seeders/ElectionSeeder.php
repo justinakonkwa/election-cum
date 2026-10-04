@@ -6,6 +6,7 @@ use App\Enums\ElectionStatus;
 use App\Models\Election;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\DB;
 
 class ElectionSeeder extends Seeder
 {
@@ -32,10 +33,17 @@ class ElectionSeeder extends Seeder
                 'results_visible_before_close' => false,
                 'is_public_default' => true,
             ]);
-        } elseif ($election->end_at->lt($deadline)) {
-            $election->end_at = $deadline;
         }
 
         $election->save();
+
+        if (now('Africa/Lubumbashi')->lte($deadline)) {
+            DB::table('elections')->where('slug', 'cum-2026')->update([
+                'end_at' => '2026-10-04 23:59:59',
+                'status' => ElectionStatus::Open->value,
+                'closed_at' => null,
+                'closed_by' => null,
+            ]);
+        }
     }
 }
