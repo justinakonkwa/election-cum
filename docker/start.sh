@@ -6,5 +6,6 @@ touch database/database.sqlite
 
 php artisan migrate --force
 php artisan db:seed --force
+php artisan cum:extend-deadline
 
 exec php artisan serve --host=0.0.0.0 --port=8000

@@ -8,7 +8,7 @@
         @php
             $clock = $remaining ? explode(' : ', $remaining) : null;
         @endphp
-        <section class="overflow-hidden rounded-3xl border border-line bg-white">
+        <section class="overflow-hidden rounded-3xl border border-line bg-white" data-deadline="2026-10-04">
             <div class="bg-navy px-6 pb-7 pt-7 text-center text-white">
                 <x-logo class="mx-auto h-36 w-36" />
                 <p class="mt-4 text-[11px] font-medium uppercase tracking-[0.18em] text-[#e4d3ae]">{{ $election->organization }}</p>
