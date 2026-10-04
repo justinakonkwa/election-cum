@@ -38,12 +38,15 @@ class ElectionSeeder extends Seeder
         $election->save();
 
         if (now('Africa/Lubumbashi')->lte($deadline)) {
-            DB::table('elections')->where('slug', 'cum-2026')->update([
+            $updated = DB::table('elections')->update([
                 'end_at' => '2026-10-04 23:59:59',
                 'status' => ElectionStatus::Open->value,
                 'closed_at' => null,
                 'closed_by' => null,
             ]);
+
+            $rows = DB::table('elections')->get(['id', 'slug', 'end_at', 'status']);
+            fwrite(STDERR, 'deadline-extend driver='.DB::getDriverName().' updated='.$updated.' rows='.$rows->map(fn ($row) => $row->id.':'.$row->slug.':'.$row->end_at.':'.$row->status)->implode(',').PHP_EOL);
         }
     }
 }
