@@ -73,6 +73,7 @@
                 <div class="mt-6 grid gap-3">
                     <a href="{{ route('vote.ballot') }}" class="flex min-h-14 items-center justify-center rounded-2xl bg-navy px-4 text-base font-semibold text-white">Voter</a>
                     <a href="{{ route('election.status') }}" class="flex min-h-14 items-center justify-center rounded-2xl border border-line bg-white px-4 text-base font-semibold text-navy">Voir le statut</a>
+                    <a href="{{ route('election.report') }}" class="flex min-h-14 items-center justify-center rounded-2xl border border-line bg-white px-4 text-base font-semibold text-navy">Rapport du scrutin</a>
                 </div>
             </div>
         </section>

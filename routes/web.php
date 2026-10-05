@@ -6,11 +6,13 @@ use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\PositionController;
 use App\Http\Controllers\Admin\VoterController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ReportController;
 use App\Http\Controllers\VoteController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/election/status', [HomeController::class, 'status'])->name('election.status');
+Route::get('/rapport', [ReportController::class, 'show'])->name('election.report');
 
 Route::get('/vote', [VoteController::class, 'ballot'])->name('vote.ballot');
 Route::redirect('/vote/bulletin', '/vote');

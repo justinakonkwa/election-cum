@@ -20,6 +20,7 @@
             @auth
                 <nav class="flex flex-wrap gap-x-4 gap-y-2 text-sm text-blue-50">
                     <a href="{{ route('admin.dashboard') }}">Tableau de bord</a>
+                    <a href="{{ route('election.report') }}">Rapport</a>
                     <a href="{{ route('admin.positions.index') }}">Postes</a>
                     <a href="{{ route('admin.candidates.index') }}">Candidats</a>
                     <a href="{{ route('admin.voters.index') }}">Électeurs</a>
